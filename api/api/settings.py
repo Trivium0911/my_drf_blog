@@ -6,9 +6,9 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = os. getenv("DJANGO_KEY")
+SECRET_KEY = os.getenv("DJANGO_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = 1
 
 ALLOWED_HOSTS = []
 
@@ -26,6 +26,8 @@ INSTALLED_APPS = [
     'core',
     'ckeditor',
     'ckeditor_uploader',
+    'taggit',
+    'taggit_serializer',
 ]
 
 MIDDLEWARE = [
