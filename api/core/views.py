@@ -1,5 +1,5 @@
 from rest_framework import viewsets, pagination
-from .serializers import PostSerializer
+from .serializers import PostSerializer, TagSerializer
 from .models import Post
 from rest_framework import permissions
 from rest_framework import generics
@@ -38,3 +38,15 @@ class TagDetailView(generics.ListAPIView):
         tag_slug = self.kwargs['tag_slug'].lower()
         tag = Tag.objects.get(slug=tag_slug)
         return Post.objects.filter(tags=tag)
+
+
+class TagView(generics.ListAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+    permission_classes = [permissions.AllowAny]
+
+
+class AsideView(generics.ListAPIView):
+    queryset = Post.objects.all().order_by('-id')[:5]
+    serializer_class = PostSerializer
+    permission_classes = [permissions.AllowAny]
