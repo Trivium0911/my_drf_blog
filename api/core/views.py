@@ -62,31 +62,6 @@ class AsideView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
 
-class FeedBackView(View):
-    def get(self, request, *args, **kwargs):
-        form = FeedBackForm()
-        return render(request, 'myblog/contact.html', context={
-            'form': form,
-            'title': 'Написать мне'
-        })
-
-    def post(self, request, *args, **kwargs):
-        form = FeedBackForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['name']
-            from_email = form.cleaned_data['email']
-            subject = form.cleaned_data['subject']
-            message = form.cleaned_data['message']
-            try:
-                send_mail(f'От {name} | {subject}', message, from_email, ['amromashov@gmail.com'])
-            except BadHeaderError:
-                return HttpResponse('Невалидный заголовок')
-            return HttpResponseRedirect('success')
-        return render(request, 'myblog/contact.html', context={
-            'form': form,
-        })
-
-
 class FeedBackView(APIView):
     permission_classes = [permissions.AllowAny]
     serializer_class = ContactSerailizer
@@ -101,3 +76,6 @@ class FeedBackView(APIView):
             message = data.get('message')
             send_mail(f'От {name} | {subject}', message, from_email, ['triv_1993@mail.ru'])
             return Response({"success": "Sent"})
+
+
+
